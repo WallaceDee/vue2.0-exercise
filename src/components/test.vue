@@ -1,12 +1,15 @@
 <template>
 <div>
 	{{hello}}
-	<button class="my-button" v-on:click="emitMyEvent">自定义</button>
+	<slot name="sa"></slot>插槽开始<slot name="sb"></slot>插槽结束	<slot name="sc"></slot>
+
+	<button class="my-button" v-on:click="emitMyEvent">自定义{{number}}</button>
 </div>
 </template>
 
 <script>
 	export default{
+		props:['number'],
 		data:function(){
 			return {
 				hello:'I am a component test!'

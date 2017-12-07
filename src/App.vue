@@ -44,15 +44,29 @@
       <span v-show="showflag">华</span>
       <button v-on:click="toggleShow">toggleShow</button>
     </div>
-    <componentTest v-on:my-event="onComTestMyEvent"></componentTest>
+    <componentTest v-on:my-event="onComTestMyEvent" :number="myValue">
+      <h1 slot="sa">sa我是一根针</h1>
+      <h1 slot="sb">sb见缝插针</h1>
+      <h1 slot="sc">sc一针见血</h1>
+    </componentTest>
+    <div>
+      <transition name="fade" mode="out-in">
+        <div v-bind:is="currView">
+          <p>sasd</p>
+        </div>
+      </transition>
+      <button v-on:click="changeView">changeView</button>
+    </div>
   </div>
 </template>
 <script>
 import Vue from 'vue'
 import componentTest from './components/test'
+import componentTest1 from './components/test1'
 export default {
   components: {
-    componentTest: componentTest
+    componentTest: componentTest,
+    componentTest1: componentTest1
   },
   computed: {
     myValueWithoutNum: function() {
@@ -70,6 +84,7 @@ export default {
       myRadio: '',
       mySelect: '',
       myCheckbox: [],
+      currView: "component-test",
       world: '<p>hello</p><img src="./assets/logo.png">',
       num: 1,
       status: false,
@@ -125,6 +140,10 @@ export default {
     },
     onComTestMyEvent: function(w) {
       console.log("on my event" + w);
+    },
+    changeView: function() {
+
+      this.currView =this.currView==="component-test"?this.currView="component-test1":this.currView="component-test";
     }
   }
 
@@ -153,6 +172,16 @@ label {
   margin-top: 10px;
   margin-bottom: 10px;
   border: 1px solid #000;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .5s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 
 </style>
